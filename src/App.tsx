@@ -15,6 +15,8 @@ const App: React.FC = () => {
       <h1>My SNS</h1>
       <TweetForm setTweets={setTweets} />
       <TweetList tweets={tweets} setTweets={setTweets} />
+      {/* 投稿フォームにsetTweetsを渡して、ユーザーがツイートを追加できるように。
+      投稿リストにtweetsとsetTweetsを渡して、一覧を表示、操作できるように。 */ }
     </div>
   );
 };

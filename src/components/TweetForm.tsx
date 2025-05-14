@@ -9,6 +9,7 @@ interface Props {
 
 const TweetForm: React.FC<Props> = ({ setTweets }) => {
   const [content, setContent] = useState("");
+  //投稿の内容を入力するテキストエリアに使う状態変数
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,7 +23,14 @@ const TweetForm: React.FC<Props> = ({ setTweets }) => {
       replies: [],
     };
 
+    // uuidv4()：一意のIDを作る。
+    // content：入力された投稿内容。
+    // new Date()：今の時間。
+    // likes: 初期状態では0。
+    // replies: 最初は返信なしなので空の配列。
+
     setTweets((prev) => [newTweet, ...prev]);
+    // setTweetsを使って、ツイートを追加する。今あるツイートの前に新しいツイートを追加する。
     setContent("");
   };
 
@@ -34,6 +42,7 @@ const TweetForm: React.FC<Props> = ({ setTweets }) => {
         placeholder="What's happening?"
       />
       <button type="submit">Tweet</button>
+      {/* 投稿ボタン */}
     </form>
   );
 };

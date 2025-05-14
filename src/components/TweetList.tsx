@@ -17,5 +17,8 @@ const TweetList: React.FC<Props> = ({ tweets, setTweets }) => {
     </div>
   );
 };
+// tweetsの中身（投稿）を1つずつ表示しています。
+
+// TweetItemというコンポーネントに渡して、1つ1つの投稿を表示。
 
 export default TweetList;
