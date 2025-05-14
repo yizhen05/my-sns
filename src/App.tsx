@@ -1,26 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// src/App.tsx
+import React, { useState } from "react";
+import { Tweet } from "./types";
+import TweetForm from "./components/TweetForm";
+import TweetList from "./components/TweetList";
+import "./App.css";
 
-function App() {
+const App: React.FC = () => {
+  const [tweets, setTweets] = useState<Tweet[]>([]);
+  //tweets:すべてのツイートを格納する変数
+  //setTweets:ツイートを更新するための関数
+  //useState<Tweet[]>():Tweet型の空の配列を設定
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>My SNS</h1>
+      <TweetForm setTweets={setTweets} />
+      <TweetList tweets={tweets} setTweets={setTweets} />
     </div>
   );
-}
+};
 
 export default App;
