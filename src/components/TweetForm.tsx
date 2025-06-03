@@ -1,48 +1,44 @@
 // src/components/TweetForm.tsx
-import React, { useState } from "react";
-import { Tweet } from "../types";
-import { v4 as uuidv4 } from "uuid";
+import { useState } from "react";
+import { collection, addDoc, Timestamp } from "firebase/firestore";
+import { db } from "../firebase";
 
-interface Props {
-  setTweets: React.Dispatch<React.SetStateAction<Tweet[]>>;
-}
-
-const TweetForm: React.FC<Props> = ({ setTweets }) => {
+const TweetForm = () => {
   const [content, setContent] = useState("");
-  //投稿の内容を入力するテキストエリアに使う状態変数
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!content.trim()) return;
 
-    const newTweet: Tweet = {
-      id: uuidv4(),
-      content,
-      createdAt: new Date(),
-      likes: 0,
-      replies: [],
-    };
+    try {
+      await addDoc(collection(db, "tweets"), {
+        content,
+        createdAt: Timestamp.now(),
+        likes: 0,
+        replies: [],
+      });
 
-    // uuidv4()：一意のIDを作る。
-    // content：入力された投稿内容。
-    // new Date()：今の時間。
-    // likes: 初期状態では0。
-    // replies: 最初は返信なしなので空の配列。
-
-    setTweets((prev) => [newTweet, ...prev]);
-    // setTweetsを使って、ツイートを追加する。今あるツイートの前に新しいツイートを追加する。
-    setContent("");
+      setContent("");
+    } catch (error) {
+      console.error("ツイートの保存に失敗しました:", error);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="p-4 border-b">
       <textarea
+        className="w-full p-2 border rounded"
+        rows={3}
         value={content}
         onChange={(e) => setContent(e.target.value)}
-        placeholder="What's happening?"
+        placeholder="いまどうしてる？"
       />
-      <button type="submit">Tweet</button>
-      {/* 投稿ボタン */}
+      <button
+        type="submit"
+        className="mt-2 px-4 py-2 bg-blue-500 text-white rounded"
+      >
+        ツイート
+      </button>
     </form>
   );
 };
