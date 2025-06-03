@@ -21,7 +21,7 @@ const TweetForm = () => {
       // `content` は、ユーザーが入力したツイートの内容
       await addDoc(collection(db, "tweets"), {
         content: content,
-        createdAt: Timestamp.now(),
+        createdAt: Timestamp.now(), // Firestore の Timestamp を JavaScript の Date に変換
         likes: 0,
         replies: [],
       });
@@ -33,9 +33,9 @@ const TweetForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 border-b">
+    <form onSubmit={handleSubmit} className="flex flex-col p-4 border-b">
       <textarea
-        className="w-full p-2 border rounded"
+        className="w-80 m-auto p-2 border rounded "
         rows={3}
         value={content}
         onChange={(e) => setContent(e.target.value)}
@@ -43,7 +43,7 @@ const TweetForm = () => {
       />
       <button
         type="submit"
-        className="mt-2 px-4 py-2 bg-blue-500 text-white rounded"
+        className="m-auto t-2 px-4 py-2 mt-auto bg-blue-500 text-white rounded"
       >
         ツイート
       </button>
